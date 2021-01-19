@@ -1,0 +1,18 @@
+/* 屏幕小于786px */
+@media screen and (max-width: 768px) {
+    body {
+        background-color:lightblue;
+    }
+	
+}
+/* 屏幕超过786px */
+@media screen and (min-width: 768px) {
+    body {
+        background-color:#fff;
+    }
+	.layui-form{
+		width: 365px;
+		margin: 40vh auto 0;
+	}
+}
+

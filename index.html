@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>签到</title>
+		<link rel="stylesheet" type="text/css" href="layui/css/layui.css"/>
+		<script src="layui/layui.all.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+	</head>
+	<body>
+		<div class="layui-container">
+			<div class="layui-row">
+				<div class="layui-col-md12" id="input">
+					<form action="" class="layui-form layui-form-pane" lay-filter="form">
+						<div class="layui-inline">
+						    <label class="layui-form-label">学号</label>
+						    <div class="layui-input-inline" style="">
+								<input type="text" name="id" autocomplete="off" class="layui-input" lay-verify="required|number">
+						    </div>
+								<button type="button" class="layui-btn" id="sign">签到</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+	
+	<script type="text/javascript">
+		layui.use(['form','layer'],function(){
+			var $ = layui.$,
+			form = layui.form,
+			layer = layui.layer;
+			
+			$('#sign').on('click',function(){
+				var url = 'http://81.68.116.226/api/index.php';
+				
+				var data = form.val('form')
+				$.ajax({
+					url:url,
+					type:'get',
+					data:{
+						id:data.id,
+						role:0
+					},
+					success:function(res){
+						res=JSON.parse(res);
+						if (res.msg == "success") {
+							if(res.data.time!=0){
+								layer.msg('同学，你已经签到成功，请不要重复签到！',{icon:0})
+							}else{
+								layer.msg("签到成功！",{icon:1})
+							}
+						} else{
+							layer.msg('签到错误，请重新签到',{icon:0})
+						}
+					},
+					error:function(error){
+						layer.open({
+							title:'系统错误',
+							content:'接口错误: '+url
+						})
+					}
+				})
+				
+				
+			})
+			
+		})
+	</script>
+</html>

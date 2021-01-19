@@ -1,0 +1,15 @@
+/* 屏幕小于786px */
+@media screen and (max-width: 768px) {
+	
+}
+/* 屏幕超过786px */
+@media screen and (min-width: 768px) {
+	
+}
+#header{
+	font-size: 20px;
+	text-align: left;
+	line-height: 30px;
+	color: #000;
+	background-color: #f0f0f0;
+}

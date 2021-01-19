@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>签到列表</title>
+		<link rel="stylesheet" type="text/css" href="layui/css/layui.css"/>
+		<script src="layui/layui.all.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/styles.css"/>
+	</head>
+	<body>
+		<div class="layui-container">
+			<div class="layui-row">
+				<div class="layui-col-md12" id="header">
+					<div class="layui-col-md3">学号</div>
+					<div class="layui-col-md3">姓名</div>
+					<div class="layui-col-md4">状态</div>
+				</div>
+				<div class="layui-col-md12" id="input">
+					
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		layui.use(['form','layer','util'],function(){
+			var $ = layui.$,
+			form = layui.form,
+			util = layui.util,
+			layer = layui.layer;
+			
+				var url = 'http://81.68.116.226/api/index.php';
+				for (var i=1;i<44;i++) {
+					setTimeout(get(i),300)
+				}
+				
+				function get(d){
+					$.ajax({
+						url:url+'?id='+d+'&role=1',
+						type:'get',
+						success:function(res){
+							res=JSON.parse(res);
+							console.log(res);
+							if (res.msg == "success") {
+								var string = '';
+									if(!res.data[i].time){
+										time = '未签到'
+									}else{
+										time = util.timeAgo(time,true)
+									}
+									$('#input').append('<div class="layui-col-md12"><div class="layui-col-md3">'+res.id+
+									'</div><div class="layui-col-md3">'+res.name+'</div><div class="layui-col-md4">'+time+'</div></div>')
+							}
+						},
+						error:function(error){
+							layer.open({
+								title:'系统错误',
+								content:'接口错误: '+url
+							})
+						}
+					})
+					
+				}
+				
+				
+			
+		})
+	</script>
+</html>
